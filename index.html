@@ -215,15 +215,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 8px;
         }
 
         .gift-callout {
             font-size: 2rem;
-            margin-bottom: 60px;
+            margin-bottom: 12px;
             color: var(--gold);
             text-shadow: 0 0 10px rgba(201, 169, 110, 0.4);
             animation: textBounce 2s infinite ease-in-out;
             cursor: pointer;
+            position: relative;
+            z-index: 2;
         }
 
         @keyframes textBounce {
@@ -241,6 +244,7 @@
         .gift-wrapper {
             width: 200px;
             height: 200px;
+            margin-top: 135px;
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.5s;
@@ -280,6 +284,57 @@
             transform: scale(1.1) rotateY(15deg);
             animation: none;
             /* Stop the wiggle on hover */
+        }
+
+        .gift-message-panel {
+            margin-top: 30px;
+            width: min(92vw, 760px);
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            background: linear-gradient(145deg, var(--navy), #101a2e);
+            box-shadow: 0 0 40px rgba(201, 169, 110, 0.2), inset 0 0 20px rgba(201, 169, 110, 0.08);
+            padding: 40px 28px;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(18px);
+            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+            pointer-events: none;
+        }
+
+        .gift-message-panel.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .gift-message-panel p {
+            margin: 15px 0;
+            font-size: 1.3rem;
+            line-height: 1.8;
+        }
+
+        .gift-message-panel strong {
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .modal-emoji {
+            display: inline-block;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .gift-box,
@@ -703,92 +758,6 @@
             margin-bottom: 10px;
         }
 
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(26, 39, 68, 0.8);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: linear-gradient(145deg, var(--navy), #101a2e);
-            border: 2px solid var(--gold);
-            border-radius: 20px;
-            padding: 50px 40px;
-            max-width: 650px;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(201, 169, 110, 0.2), inset 0 0 20px rgba(201, 169, 110, 0.1);
-            transform: scale(0.8) translateY(50px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1) translateY(0);
-        }
-
-        .modal-body {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: var(--cream);
-        }
-
-        .modal-body strong {
-            color: var(--gold);
-            font-family: 'Playfair Display', serif;
-        }
-
-        .modal-emoji {
-            display: inline-block;
-            animation: bounce 2s infinite ease-in-out;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .modal-close {
-            margin-top: 40px;
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 10px 30px;
-            border-radius: 30px;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-        }
-
-        .modal-close:hover {
-            background: var(--gold);
-            color: var(--navy);
-            box-shadow: 0 0 20px rgba(201, 169, 110, 0.5);
-            transform: scale(1.05);
-        }
 
         /* Canvas for confetti */
         #confetti-canvas {
@@ -1047,6 +1016,7 @@
             text-align: center;
         }
 
+
         /* Responsive */
         @media (max-width: 768px) {
             .step-card {
@@ -1066,12 +1036,12 @@
                 font-size: 2.5rem;
             }
 
-            .modal-content {
-                padding: 30px 20px;
-                margin: 20px;
+            .gift-message-panel {
+                padding: 30px 18px;
+                margin: 20px auto 0;
             }
 
-            .modal-body {
+            .gift-message-panel p {
                 font-size: 1.1rem;
             }
         }
@@ -1117,6 +1087,24 @@
                     <div class="lid-face lid-left"></div>
                     <div class="lid-face lid-top"></div>
                 </div>
+            </div>
+            <div class="gift-message-panel" id="giftMessage">
+                <div style="font-size: 2rem; margin-bottom: 20px;"><span class="modal-emoji">🙏</span><span
+                        class="modal-emoji">✨</span></div>
+                <p>From the bottom of our hearts — <strong>Thank You!</strong></p>
+                <p>You are not just our customer, you are our family! <span class="modal-emoji">💛</span> Your trust,
+                    love, and support means the entire world to us at <strong>Manorath Collection</strong>.</p>
+                <p>Every saree draped, every light that glows in your home, every toy that makes a child smile, every
+                    dish cooked with love in your kitchen — we are honored to be a part of your beautiful life!
+                    🥻💡🧸🍳</p>
+                <p>We promise to always bring you the highest quality at the lowest prices with a smile and warmth. Your
+                    happiness is our biggest reward! <span class="modal-emoji">🌟</span></p>
+                <p>Please do visit us again — we'll always have something new and wonderful waiting just for you!
+                    <span class="modal-emoji">🌹</span>
+                </p>
+                <p
+                    style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--gold); margin-top: 30px;">
+                    🌸💛 THANK YOU SO MUCH! 💛🌸</p>
             </div>
         </section>
 
@@ -1271,32 +1259,6 @@
         </div>
     </footer>
 
-    <!-- Modal -->
-    <div class="modal-overlay" id="thankYouModal">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div style="font-size: 2rem; margin-bottom: 20px;"><span class="modal-emoji">🙏</span><span
-                        class="modal-emoji">✨</span></div>
-                <p>From the bottom of our hearts — <strong>Thank You!</strong></p>
-                <p style="margin: 15px 0;">You are not just our customer, you are our family! <span
-                        class="modal-emoji">💛</span> Your trust, love, and support means the entire world to us at
-                    <strong>Manorath Collection</strong>.
-                </p>
-                <p style="margin: 15px 0;">Every saree draped, every light that glows in your home, every toy that makes
-                    a child smile, every dish cooked with love in your kitchen — we are honored to be a part of your
-                    beautiful life! 🥻💡🧸🍳</p>
-                <p style="margin: 15px 0;">We promise to always bring you the highest quality at the lowest prices with
-                    a smile and warmth. Your happiness is our biggest reward! <span class="modal-emoji">🌟</span></p>
-                <p style="margin: 15px 0;">Please do visit us again — we'll always have something new and wonderful
-                    waiting just for you! <span class="modal-emoji">🌹</span></p>
-                <p
-                    style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--gold); margin-top: 30px;">
-                    🌸💛 THANK YOU SO MUCH! 💛🌸</p>
-            </div>
-            <button class="modal-close" id="closeModal">💛 With Love, Always</button>
-        </div>
-    </div>
-
     <!-- Scripts -->
     <script>
         // Simple Sparkle Trail
@@ -1391,30 +1353,16 @@
 
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // Gift Box and Modal Logic
+        // Gift Box and direct message logic
         const giftBox = document.getElementById('gift-box');
-        const modal = document.getElementById('thankYouModal');
-        const closeModalBtn = document.getElementById('closeModal');
+        const giftMessage = document.getElementById('giftMessage');
 
         giftBox.addEventListener('click', () => {
             giftBox.classList.add('open');
             launchConfetti();
-
-            setTimeout(() => {
-                modal.classList.add('active');
-            }, 800);
-        });
-
-        function closeModal() {
-            modal.classList.remove('active');
-            setTimeout(() => {
-                giftBox.classList.remove('open');
-            }, 400);
-        }
-
-        closeModalBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
+            if (giftMessage) {
+                giftMessage.classList.add('show');
+            }
         });
 
         // Canvas Confetti
